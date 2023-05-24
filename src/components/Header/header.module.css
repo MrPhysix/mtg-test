@@ -1,0 +1,15 @@
+.header {
+    background: var(--color-header-bg);
+    color: var(--color-text);
+    height: 10vh;
+    padding: 0 5vw;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    max-width: 42px;
+    justify-self: center;
+}
