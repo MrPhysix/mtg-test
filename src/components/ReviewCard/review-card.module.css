@@ -29,3 +29,12 @@
     font-weight: 400;
     font-size: 18px;
 }
+
+
+@media screen and (max-width: 1024px) {
+    .card {
+        padding: .3em 1em;
+    }
+
+}
+

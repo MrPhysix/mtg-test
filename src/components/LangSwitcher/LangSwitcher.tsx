@@ -3,19 +3,19 @@ import { useSelector } from 'react-redux';
 import styles from './lang-switcher.module.css';
 import { RootState, useAppDispatch } from '../../services';
 import { switchLanguage } from '../../services/reducers/language';
+import data from '../../utils/data/data.json';
 
 function LangSwitcher() {
   const { language } = useSelector((state: RootState) => state.language);
   const dispatch = useAppDispatch();
 
-  // mock
-  const languages: Array<string> = [
-    'russian', 'english',
-  ];
+  const languages: Array<string> = Object.keys(data);
 
-  const handleLanguageSwitch = (evt: any) => {
-    dispatch(switchLanguage(evt.target.value));
-    evt.target.blur();
+  const handleLanguageSwitch = (evt: React.SyntheticEvent): void => {
+    const { target } = evt;
+    if (target) dispatch(switchLanguage((target as HTMLButtonElement).value));
+    // evt.target.blur();
+    (document.activeElement as HTMLElement).blur();
   };
 
   return (

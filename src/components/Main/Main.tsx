@@ -1,43 +1,64 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../services';
+import React, { useState, useMemo } from 'react';
 import ReviewCard from '../ReviewCard/ReviewCard';
-import { TReviews } from '../../types/reviews';
+import { TReviews, TReview } from '../../types/reviews';
 import styles from './main.module.css';
+import PagesPagination from '../PagesPagination/PagesPagination';
 
-type TProps = {
-  [key: string] : TReviews
-}
+function Main({ reviews }: { reviews: TReviews }) {
+  const [currPage, setCurrPage] = useState(1);
+  const [reviewsPerPage, setReviewsPerPage] = useState(10);
 
-const mock = {
-  date: '16.01.2021',
-  name: 'Иванова Елена',
-  review: 'I really liked the quality of the product, I will order more.',
-};
+  const reviewsArr: Array<TReview> = Object.values([reviews][0]);
 
-function Main({ reviews }: {reviews: TProps}) {
-  const { language } = useSelector((state: RootState) => state.language);
-  // eslint-disable-next-line
-  console.log("reviews", reviews);
-  // eslint-disable-next-line
-  console.log('language', language);
+  const lastReviewsIndex = useMemo(
+    () => currPage * reviewsPerPage,
+    [currPage, reviewsPerPage],
+  );
+  const firstReviewsIndex = useMemo(
+    () => lastReviewsIndex - reviewsPerPage,
+    [lastReviewsIndex, reviewsPerPage],
+  );
 
+  const currReviews = reviewsArr.slice(firstReviewsIndex, lastReviewsIndex);
+
+  // handlers
+  const handlePagination = (pageNumber: number): void => {
+    setCurrPage(pageNumber);
+  };
+
+  const handleNextPage = (totalPages: number): void => {
+    if (currPage === totalPages) return;
+    setCurrPage((prev) => prev + 1);
+  };
+
+  const handlePrevPage = (): void => {
+    if (currPage === 1) return;
+    setCurrPage((prev) => prev - 1);
+  };
+  //
   return (
     <main className={styles.main}>
       <ul className={styles.ul}>
-        <ReviewCard date={mock.date} name={mock.name} review={mock.review} />
-        <ReviewCard date={mock.date} name={mock.name} review={mock.review} />
-        <ReviewCard date={mock.date} name={mock.name} review={mock.review} />
-        <ReviewCard date={mock.date} name={mock.name} review={mock.review} />
-        <ReviewCard date={mock.date} name={mock.name} review={mock.review} />
-        <ReviewCard date={mock.date} name={mock.name} review={mock.review} />
-        <ReviewCard date={mock.date} name={mock.name} review={mock.review} />
-        <ReviewCard date={mock.date} name={mock.name} review={mock.review} />
-        <ReviewCard date={mock.date} name={mock.name} review={mock.review} />
-        <ReviewCard date={mock.date} name={mock.name} review={mock.review} />
+        {
+          currReviews.map((item: TReview) => (
+            <ReviewCard
+              key={item.name}
+              date={item.date}
+              name={item.name}
+              review={item.review}
+            />
+          ))
+        }
       </ul>
+      <PagesPagination
+        totalCount={reviewsArr.length}
+        itemPerPage={reviewsPerPage}
+        handler={handlePagination}
+        handleNextPage={handleNextPage}
+        handlePrevPage={handlePrevPage}
+        currPage={currPage}
+      />
     </main>
   );
 }
-
 export default Main;
