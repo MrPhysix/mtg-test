@@ -1,0 +1,31 @@
+.card {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-style:  normal;
+    padding: .5em 3em;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: .5em;
+}
+
+.h2 {
+    color: inherit;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.data {
+    color: inherit;
+    font-family: inherit;
+    font-weight: 300;
+    font-size: 16px;
+    opacity: .7;
+}
+
+.review {
+    color: inherit;
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 18px;
+}

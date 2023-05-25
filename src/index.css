@@ -3,7 +3,10 @@
 
 :root {
   --color-text: #fff;
-  --color-header-bg: #1C1C21;
+  --color-header-bg: #1A1A1F;
+  --color-backgound: #16161A;
+
+  --color-border: rgba(255, 255, 255, .3);
 }
 
 body {
@@ -11,4 +14,5 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-backgound);
 }
